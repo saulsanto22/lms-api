@@ -20,6 +20,7 @@ model User {
   role      Role     @default(STUDENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  courses   Course[]
 
   @@map("users")
 }
@@ -28,4 +29,20 @@ enum Role {
   ADMIN
   TEACHER
   STUDENT
+}
+
+model Course {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  price       Float   @default(0)
+  published   Boolean @default(false)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("courses")
 }
